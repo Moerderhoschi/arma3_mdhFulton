@@ -3,10 +3,14 @@
 Fulton Recovery is a mod, created by Moerderhoschi for Arma III, to enable a fulton recovery like in MGSV for units and vehicles.
 
 HOW THE ADDON WORKS?
-- 1. At missionstart sleep 3 seconds and Check all units/vehicles if anybody has the special variable assigned mdhFulton
-- 2a. if variable not assigned, add fulton actionmenu entry to all units/vehicles
-- 2b. if variable is assigned, add fulton actionmenu entry only to units with assigned variable
-- 3. sleep 5 seconds and start check from beginning
+
+1x. At missionstart sleep 3 seconds and Check all units/vehicles if anybody has the special variable assigned mdhFulton
+
+2a. if variable not assigned, add fulton actionmenu entry to all units/vehicles
+
+2b. if variable is assigned, add fulton actionmenu entry only to units with assigned variable
+
+3x. sleep 5 seconds and start check from beginning
 
 WHAT HAPPENS TO THE FULTON RECOVERED UNIT/VEHICLE?
 
