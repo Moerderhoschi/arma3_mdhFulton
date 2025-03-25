@@ -1,32 +1,40 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// FULTON RECOVERY MOD
-// MADE BY MOERDERHOSCHI
-// ARMED-ASSAULT.DE
-// 08.2016
+// MDH FULTON RECOVERY MOD(by Moerderhoschi) - v2025-03-16
+// github: https://github.com/Moerderhoschi/arma3_mdhFulton
+// https://steamcommunity.com/sharedfiles/filedetails/?id=746299408
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-0 = [] spawn
+if (!hasInterface) exitWith {};
+0 spawn
 {
-	if (isDedicated) exitWith {};
-	waitUntil {sleep 1; !(isNull player)};
-	waitUntil {sleep 1; player == player};
-	
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	// DIARYRECORD
 	///////////////////////////////////////////////////////////////////////////////////////////////////
 	_diary =
 	{
-		if (isNull player) exitWith {false};
-		if(!(player diarySubjectExists "mdhFulton")) then
+		waitUntil {!(isNull player)};
+		_c = true;
+		_t = "Fulton Recovery";
+		if (player diarySubjectExists "MDH Mods") then
 		{
-			player createDiarySubject ["mdhFulton","FultonRecovery"];
+			{
+				if (_x#1 == _t) then {_c = false}
+			} forEach (player allDiaryRecords "MDH Mods");
+		}
+		else
+		{
+			player createDiarySubject ["MDH Mods","MDH Mods"];
+		};
+
+		if(_c) then
+		{
 			player createDiaryRecord
 			[
-				"mdhFulton",
+				"MDH Mods",
 				[
-					"Fulton Recovery by Moerderhoschi",
+					_t,
 					(
 						'<br/>Fulton Recovery is a mod, created by Moerderhoschi for Arma 3, to enable a fulton recovery like in MGSV for units and vehicles. '
-					  + 'If you have any question you can contact me at the official Bohemia Interactive Forum: forums.bistudio.com<br/>'
+					  + 'If you have any question you can contact me at the steam workshop page.<br/>'
 					  + '<br/>'
 					  + 'To activate Fulton Recovery to some specific units only, put the following into the initfield of the units:<br/>'
 					  + '<br/>'
@@ -102,7 +110,7 @@
 					detach _p;
 					_u attachTo [_p, [-(getCenterOfMass _u select 0),-(getCenterOfMass _u select 1),-(getCenterOfMass _u select 2)] ];
 					_sleep = 0.02;
-					_sPBT = 0;
+					//_sPBT = 0;
 					while {(getPos _p select 2) < _h} do
 					{
 						_p setVelocity [0,0,_v];
@@ -111,7 +119,7 @@
 							[_p, 0, 0] call BIS_fnc_setPitchBank;
 						//};
 						_v = _v + 1;
-						_sPBT = _sPBT + _sleep;
+						//_sPBT = _sPBT + _sleep;
 						sleep _sleep;
 					};
 
@@ -164,7 +172,7 @@
 							//};
 							_v = _v - 1;
 							if (_v < 6) then {_v = 6};
-							_sPBT = _sPBT + _sleep;
+							//_sPBT = _sPBT + _sleep;
 							_p setVelocity [0,0,-_v];
 							sleep _sleep;
 						};
@@ -219,20 +227,13 @@
 	///////////////////////////////////////////////////////
 	// loop
 	///////////////////////////////////////////////////////
-	sleep 1;
 	_mdhFultonAssignedExplicit = false;
-	
-	while {true} do
+	while {hasInterface} do
 	{
-		//systemChat (str(time) + " -- diary stuff");
-		// diary stuff
-		0 = _diary spawn
-		{
-			waitUntil {!(isNull player)};
-			waitUntil {player==player};
-			0 = [] call _this;
-		};
-	
+		uiSleep 0.9;
+		call _diary;
+		sleep 0.5;
+
 		//systemChat (str(time) + " -- gather _list start");
 		_list = vehicles;
 		_list = _list + allUnits;
@@ -303,8 +304,8 @@
 				};
 			};
 		} forEach _list;
-	
-		//systemChat (str(time) + " -- sleep 5");
-		sleep (5 + random 1);
+
+		sleep 5;
+		sleep random 1;
 	};
 };

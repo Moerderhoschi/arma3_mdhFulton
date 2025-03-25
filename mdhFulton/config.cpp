@@ -6,7 +6,7 @@ class CfgPatches
 	{
 		author = "Moerderhoschi";
 		name = "Fulton Recovery";
-		url = "http://moerderhoschi.bplaced.net";
+		url = "https://steamcommunity.com/sharedfiles/filedetails/?id=746299408";
 		units[] = {};
 		weapons[] = {};
 		requiredVersion = 1.0;
@@ -39,10 +39,11 @@ class CfgMods
 	{
 		dir = "@mdhFulton";
 		name = "Fulton Recovery";
-		picture = "a3\air_f_beta\Parachute_01\Data\ui\map_parachute_01_ca.paa";
+		//picture = "a3\air_f_beta\Parachute_01\Data\ui\map_parachute_01_ca.paa";
+		picture = "mdhFulton\fulton.paa";
 		hidePicture = "true";
 		hideName = "true";
 		actionName = "Website";
-		action = "http://moerderhoschi.bplaced.net";
+		action = "https://steamcommunity.com/sharedfiles/filedetails/?id=746299408";
 	};
 };
