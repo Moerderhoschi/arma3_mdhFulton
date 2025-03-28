@@ -1,7 +1,7 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
-// MDH FULTON RECOVERY MOD(by Moerderhoschi) - v2025-03-16
+// MDH FULTON RECOVERY MOD(by Moerderhoschi) - v2025-03-28
 // github: https://github.com/Moerderhoschi/arma3_mdhFulton
-// https://steamcommunity.com/sharedfiles/filedetails/?id=746299408
+// steam mod version: https://steamcommunity.com/sharedfiles/filedetails/?id=746299408
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 if (!hasInterface) exitWith {};
 0 spawn
@@ -221,7 +221,7 @@ if (!hasInterface) exitWith {};
 			false,                              // removeCompleted: BOOL - Remove on completion (default: true)
 			false,                              // showUncon: BOOL -Show in unconscious state (default: false)
 			false                               // showWindow: Boolean - (Optional, default true) show on screen; if false action needs to be selected from action menu to appear on screen
-		] call BIS_fnc_holdActionAdd;
+		] call mdhHoldActionAdd;
 	};
 	
 	///////////////////////////////////////////////////////
@@ -308,4 +308,39 @@ if (!hasInterface) exitWith {};
 		sleep 5;
 		sleep random 1;
 	};
+};
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+// MDH HOLD ACTION ADD FUNCTION(by Moerderhoschi with massive help of GenCoder8) - v2025-03-27
+// fixed version of BIS_fnc_holdActionAdd
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+if (hasInterface) then
+{
+	GenCoder8_fixHoldActTimer =
+	{
+		params["_title","_iconIdle","_hint"];
+		private _frameProgress = "frameprog";
+		if(time > (missionNamespace getVariable [_frameProgress,-1])) then
+		{
+			missionNamespace setVariable [_frameProgress,time + 0.065];
+			bis_fnc_holdAction_animationIdleFrame = (bis_fnc_holdAction_animationIdleFrame + 1) % 12;
+		};
+		private _var = "bis_fnc_holdAction_animationIdleTime_" + (str _target) + "_" + (str _actionID);
+		if (time > (missionNamespace getVariable [_var,-1]) && {_eval}) then
+		{
+			missionNamespace setVariable [_var, time + 0.065];
+			if (!bis_fnc_holdAction_running) then
+			{
+				[_originalTarget,_actionID,_title,_iconIdle,bis_fnc_holdAction_texturesIdle,bis_fnc_holdAction_animationIdleFrame,_hint] call bis_fnc_holdAction_showIcon;
+			};
+		};
+	};
+
+	_origFNC = preprocessFileLineNumbers "a3\functions_f\HoldActions\fn_holdActionAdd.sqf";
+	_newFNC = ([_origFNC, "bis_fnc_holdAction_animationTimerCode", true] call BIS_fnc_splitString)#0;
+	_newFNC = _newFNC + "GenCoder8_fixHoldActTimer";
+	_newFNC = _newFNC + ([_origFNC, "bis_fnc_holdAction_animationTimerCode", true] call BIS_fnc_splitString)#1;
+	_newFNC = _newFNC + "GenCoder8_fixHoldActTimer";
+	_newFNC = _newFNC + ([_origFNC, "bis_fnc_holdAction_animationTimerCode", true] call BIS_fnc_splitString)#2;
+	mdhHoldActionAdd = compile _newFNC;
 };
