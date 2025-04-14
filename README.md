@@ -1,4 +1,4 @@
- ![Alt text](https://images.steamusercontent.com/ugc/2500151322111054971/34B23C808231D6860FD56FF67A350FD1585094AF/)
+![fulton](https://github.com/user-attachments/assets/b48071b3-f5a5-4fc2-8d99-70a59e588c08)
 
 Fulton Recovery is a mod, created by Moerderhoschi for Arma III, to enable a fulton recovery like in MGSV for units and vehicles.
 
